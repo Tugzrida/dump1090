@@ -68,17 +68,20 @@ function request_from_db(icao, level, defer) {
         });
 }
 
+var getTypeDataAJAX = null;
 function getIcaoAircraftTypeData(aircraftData, defer) {
     if (_aircraft_type_cache === null) {
-        $.getJSON("db/aircraft_types/icao_aircraft_types.json")
-            .done(function(typeLookupData) {
-                _aircraft_type_cache = typeLookupData;
-            })
-            .always(function() {
-                lookupIcaoAircraftType(aircraftData, defer);
-            });
-    }
-    else {
+        if (getTypeDataAJAX === null) {
+            getTypeDataAJAX = $.getJSON("db/aircraft_types/icao_aircraft_types.json")
+                .done(function(typeLookupData) {
+                    _aircraft_type_cache = typeLookupData;
+                })
+        }
+        getTypeDataAJAX.always(function() {
+            getTypeDataAJAX = null;
+            lookupIcaoAircraftType(aircraftData, defer);
+        });
+    } else {
         lookupIcaoAircraftType(aircraftData, defer);
     }
 }

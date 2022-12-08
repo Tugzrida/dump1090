@@ -9,6 +9,7 @@ function createBaseLayers() {
         var world = [];
         var us = [];
         var europe = [];
+        var au = [];
 
         world.push(new ol.layer.Tile({
                 source: new ol.source.OSM(),
@@ -164,6 +165,32 @@ function createBaseLayers() {
         refreshNexrad();
         window.setInterval(refreshNexrad, 5 * 60000);
 
+
+        var bom = new ol.layer.Tile({
+            name: 'bom',
+            title: 'BOM Radar',
+            type: 'overlay',
+            extent: ol.proj.transformExtent([110, -50, 158, -1], "EPSG:4326", "EPSG:3857"),
+            opacity: 0.5,
+            visible: false
+        });
+        au.push(bom);
+
+        var refreshBom = function() {
+            var last10 = new Date();
+            last10.setTime(last10.getTime() - (last10.getTime() % 600000) - 600000)
+            bom.setSource(new ol.source.XYZ({
+                url : `https://api.weather.bom.gov.au/v1/rainradar/tiles/${last10.getUTCFullYear()}${String(last10.getUTCMonth()+1).padStart(2, '0')}${String(last10.getUTCDate()).padStart(2, '0')}${String(last10.getUTCHours()).padStart(2, '0')}${String(last10.getUTCMinutes()).padStart(2, '0')}/{z}/{x}/{y}.png`,
+                attributions: 'Radar courtesy of <a href="http://www.bom.gov.au/">BOM</a>',
+                minZoom: 3,
+                maxZoom: 10
+            }));
+        };
+
+        refreshBom();
+        window.setInterval(refreshBom, 10 * 60000);
+
+
         var createGeoJsonLayer = function (title, name, url, fill, stroke, showLabel = true) {
                 return new ol.layer.Vector({
                     type: 'overlay',
@@ -262,6 +289,14 @@ function createBaseLayers() {
                         name: 'europe',
                         title: 'Europe',
                         layers: europe,
+                }));
+        }
+
+        if (au.length > 0) {
+                layers.push(new ol.layer.Group({
+                        name: 'au',
+                        title: 'Australia',
+                        layers: au
                 }));
         }
 
