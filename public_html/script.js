@@ -973,6 +973,7 @@ function initialize_map() {
                         lyr.on('change:visible', function(evt) {
                                 if (evt.target.getVisible()) {
                                         MapType = localStorage['MapType'] = evt.target.get('name');
+                                        createSiteCircleFeatures();
                                 }
                         });
                 } else if (lyr.get('type') === 'overlay') {
@@ -1162,19 +1163,6 @@ function initialize_map() {
                                timeout: 5000,
                                dataType: 'json' });
         request.done(function(data) {
-                var ringStyle = new ol.style.Style({
-                        fill: null,
-                        stroke: new ol.style.Stroke({
-                                color: '#000000',
-                                width: 1
-                        }),
-                        text: new ol.style.Text({
-                            textAlign: 'left',
-                            scale: 1.5,
-                            offsetX: 7
-                        })
-                });
-
                 for (var i = 0; i < data.rings.length; ++i) {
                         var geom = new ol.geom.LineString([]);
                         var points = data.rings[i].points;
@@ -1186,8 +1174,7 @@ function initialize_map() {
                                 geom.transform('EPSG:4326', 'EPSG:3857');
 
                                 var feature = new ol.Feature(geom);
-                                ringStyle.getText().setText(data.rings[i].label);
-                                feature.setStyle(ringStyle.clone());
+                                feature.setStyle(ringStyleForAlt(data.rings[i].alt));
                                 StaticFeatures.push(feature);
                         }
                 }
@@ -1198,10 +1185,30 @@ function initialize_map() {
         });
 }
 
+
+function ringStyleForAlt(altitude) {
+        return new ol.style.Style({
+                fill: null,
+                stroke: new ol.style.Stroke({
+                        color: PlaneObject.prototype.hslRepr(PlaneObject.prototype.getAltitudeColor(altitude*3.281)), // converting from m to ft
+                        width: 1
+                })
+        });
+}
+
+
 function createSiteCircleFeatures() {
+    const darkMaps = ['carto_dark_nolabels', 'carto_dark_all', 'esri_satellite'];
+
+    if (darkMaps.includes(MapType)) {
+        var SiteCircleColor = '#FFFFFF'
+    } else {
+        var SiteCircleColor = '#000000'
+    }
+
     // Clear existing circles first
     SiteCircleFeatures.forEach(function(circleFeature) {
-       StaticFeatures.remove(circleFeature); 
+       StaticFeatures.remove(circleFeature);
     });
     SiteCircleFeatures.clear();
 
@@ -1209,12 +1216,12 @@ function createSiteCircleFeatures() {
     	return new ol.style.Style({
             fill: null,
             stroke: new ol.style.Stroke({
-                    color: '#000000',
+                    color: SiteCircleColor,
                     width: 1
             }),
             text: new ol.style.Text({
             	font: '10px Helvetica Neue, sans-serif',
-            	fill: new ol.style.Fill({ color: '#000' }),
+                fill: new ol.style.Fill({ color: SiteCircleColor }),
 				offsetY: -8,
 				text: format_distance_long(distance, DisplayUnits, 0)
 
