@@ -49,7 +49,7 @@ NET_BEAST_INPUT_PORTS=30004,30104
 NET_BEAST_OUTPUT_PORTS=30005
 
 # Accuracy of location written to JSON output
-JSON_LOCATION_ACCURACY=1
+JSON_LOCATION_ACCURACY=0
 
 # Additional options can be added here:
 EXTRA_OPTIONS=""
