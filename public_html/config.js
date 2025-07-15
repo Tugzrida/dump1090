@@ -23,18 +23,18 @@ DisplayUnits = "nautical";
 // degrees.
 
 // Default center of the map.
-DefaultCenterLat = 45.0;
-DefaultCenterLon = 9.0;
+DefaultCenterLat = -34.317;
+DefaultCenterLon = 152;
 // The google maps zoom level, 0 - 16, lower is further out
-DefaultZoomLvl   = 7;
+DefaultZoomLvl   = 8;
 
 // Center marker. If dump1090 provides a receiver location,
 // that location is used and these settings are ignored.
 
-SiteShow    = false;           // true to show a center marker
-SiteLat     = 45.0;            // position of the marker
-SiteLon     = 9.0;
-SiteName    = "My Radar Site"; // tooltip of the marker
+SiteShow    = true;           // true to show a center marker
+SiteLat     = -34.317;            // position of the marker
+SiteLon     = 150.929;
+SiteName    = "9621-YXWL | T-YWOL1 | PF97882"; // tooltip of the marker
 
 // -- Marker settings -------------------------------------
 
@@ -94,14 +94,14 @@ OutlineADSBColor = '#000000';
 // Outline color for aircraft icons with a mlat position
 OutlineMlatColor = '#4040FF';
 
-SiteCircles = true; // true to show circles (only shown if the center marker is shown)
+SiteCircles = false; // true to show circles (only shown if the center marker is shown)
 // In miles, nautical miles, or km (depending settings value 'DisplayUnits')
-DefaultSiteCirclesCount = 3;
+DefaultSiteCirclesCount = 0;
 DefaultSiteCirclesBaseDistance = 100;
 DefaultSiteCirclesInterval = 50;
 
 // Controls page title, righthand pane when nothing is selected
-PageName = "PiAware SkyAware";
+PageName = "Tugzrida ADSB | SkyAware";
 
 // Show country flags by ICAO addresses?
 ShowFlags = true;
@@ -110,7 +110,7 @@ ShowFlags = true;
 FlagPath = "flags-tiny/";
 
 // Set to true to enable the FAA base layers (US coverage only)
-FAALayers = true;
+FAALayers = false;
 
 // Provide a Bing Maps API key here to enable the Bing imagery layer.
 // You can obtain a free key (with usage limits) at
@@ -124,7 +124,7 @@ BingMapsAPIKey = null;
 // Turn on display of extra Mode S EHS / ADS-B v1/v2 data
 // This is not polished yet (and so is disabled by default),
 // currently it's just a data dump of the new fields with no UX work.
-ExtendedData = false;
+ExtendedData = true;
 
 DefaultMaxAltitudeFilter = 65000
 DefaultMinAltitudeFilter = 0
