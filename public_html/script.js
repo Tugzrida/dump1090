@@ -203,7 +203,6 @@ function fetchData() {
 
                 FetchPending = $.ajax({ url: 'data/aircraft.json',
                                         timeout: 5000,
-                                        cache: false,
                                         dataType: 'json' });
                 FetchPending.done(function(data) {
                         process_aircraft_json(data, 'dump1090-fa');
@@ -223,7 +222,6 @@ function fetchData() {
 
                 FetchPending_UAT = $.ajax({ url: 'data-978/aircraft.json',
                         timeout: 5000,
-                        cache: false,
                         dataType: 'json' });
 
                 FetchPending_UAT.done(function(data) {
@@ -486,7 +484,6 @@ function initialize() {
         // Get 978 receiver metadata if present
         $.ajax({ url: 'data-978/receiver.json',
                 timeout: 5000,
-                cache: false,
                 dataType: 'json' })
 
                 .done(function(data) {
@@ -504,7 +501,6 @@ function initialize() {
         // with initialization
         $.ajax({ url: 'data/receiver.json',
                  timeout: 5000,
-                 cache: false,
                  dataType: 'json' })
 
                 .done(function(data) {
@@ -672,7 +668,6 @@ function load_history_item(i, source) {
 
         $.ajax({ url: source + '/' + historyfile,
                  timeout: 5000,
-                 cache: false,
                  dataType: 'json' })
 
                 .done(function(data) {
@@ -1166,7 +1161,6 @@ function initialize_map() {
         // kick off an ajax request that will add the rings when it's done
         var request = $.ajax({ url: 'upintheair.json',
                                timeout: 5000,
-                               cache: true,
                                dataType: 'json' });
         request.done(function(data) {
                 for (var i = 0; i < data.rings.length; ++i) {
