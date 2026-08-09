@@ -1,3 +1,20 @@
+dump1090-fa (11.1) stable; urgency=medium
+
+  * generate-wisdom: don't try to benchmark removed _aligned variants
+  * Fix CPU feature detection for armhf binaries running on an aarch64 kernel
+
+ -- Eric Tran <eric.tran@flightaware.com>  Thu, 28 May 2026 17:16:34 +0000
+
+dump1090-fa (11.0) stable; urgency=medium
+
+  * Add build support for trixie, remove buster support
+  * dump1090: update DSP code to use latest starch version
+  * dump1090: fix compilation errors with newer gcc & clang
+  * dump1090: add --device-setting option for SoapySDR devices
+  * skyaware: Update aircraft database to 2026-04-09
+
+ -- Oliver Jowett <oliver.jowett@flightaware.com>  Thu, 14 May 2026 21:30:41 +0800
+
 dump1090-fa (10.2) stable; urgency=medium
 
   * No change release for 10.2
